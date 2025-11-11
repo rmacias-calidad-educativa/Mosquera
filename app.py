@@ -34,44 +34,35 @@ def _norm(s: str) -> str:
 TARGET_SEDE_CANON = "Mosquera"
 TARGET_SEDE_KEYS = {"mosquera"}
 
-# --- Encabezado con logo/título ---
+# Encabezado con logo/título
 def render_header():
-    st.markdown(
-        """
+    st.markdown("""
         <style>
-        .hdr-box{
-            display:flex; align-items:center; gap:16px;
-            padding:6px 8px 14px 8px; margin-bottom:6px;
-            border-bottom:1px solid rgba(160,160,160,.25);
-        }
-        .hdr-title{
-            font-weight:800; line-height:1.25; margin:0;
-            font-size:clamp(20px, 2.2vw, 28px);
-        }
-        .hdr-sub{
-            margin:4px 0 0 0; opacity:.9; font-size:clamp(14px, 1.4vw, 16px);
-        }
+        .hdr-box{display:flex;align-items:center;gap:16px;padding:6px 8px 14px 8px;margin-bottom:6px;border-bottom:1px solid rgba(160,160,160,.25);}
+        .hdr-title{font-weight:800;line-height:1.25;margin:0;font-size:clamp(20px, 2.2vw, 28px);}
+        .hdr-sub{margin:4px 0 0 0;opacity:.9;font-size:clamp(14px, 1.4vw, 16px);}
         </style>
-        """,
-        unsafe_allow_html=True,
-    )
+    """, unsafe_allow_html=True)
+
     c1, c2 = st.columns([1, 9], vertical_alignment="center")
     with c1:
         if LOGO_PATH.exists():
-            st.image(str(LOGO_PATH), use_container_width=True)
+            # Compatibilidad: versiones viejas usan use_column_width
+            try:
+                st.image(str(LOGO_PATH), use_container_width=True)
+            except TypeError:
+                st.image(str(LOGO_PATH), use_column_width=True)
+
     with c2:
-        st.markdown(
-            f"""
+        st.markdown(f"""
             <div class="hdr-box">
               <div>
                 <h1 class="hdr-title">Reporte Institucional — Innova Schools</h1>
                 <p class="hdr-sub">Sede: <b>{TARGET_SEDE_CANON}</b> · Grados 3°, 5°, 7° y 9°</p>
               </div>
             </div>
-            """,
-            unsafe_allow_html=True,
-        )
-
+        """, unsafe_allow_html=True)
+        
 render_header()
 st.markdown("<hr style='opacity:.25'>", unsafe_allow_html=True)
 
